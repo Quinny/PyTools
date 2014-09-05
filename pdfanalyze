@@ -36,7 +36,6 @@ def printMeta(filename): #Read and display the PDF meta data
 
 
 def main():
-	parser=optparse.OptionParser
 	parser = optparse.OptionParser('Usage pdfanalyze -f <PDF file name>')
 	parser.add_option('-f', dest='filename', type='string',help='specify PDF file name')
 	(options, args) = parser.parse_args()

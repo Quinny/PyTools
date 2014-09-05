@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+
+
+
+'''
+Quinn Perfetto 2014
+
+
+Port state checking using python-nmap
+
+*** DO NOT USE THIS PROGRAM WITHOUT EXPLICIT CONSENT FROM THE HOST.  I DO NOT CONDONE THE USE OF THIS PROGRAM WITHOUT PERMISSION ***
+
+
+Usage:
+
+checkport -H <host address> -p <port>
+
+OR
+
+checkport -H <host address> -p <start port>:<end port>
+*for checking a range of ports
+
+
+
+Again, I really dont condone using this for anything other than checking your own security
+
+'''
+
+
+
+import nmap
+import optparse
+
+
+def portScan(host,port): #checks the state of a given port on the host computer
+	nm=nmap.PortScanner()
+	nm.scan(host,port)
+	state=nm[host]['tcp'][int(port)]['state']
+
+	print "[*] "+host+" tcp/"+port+": "+state
+
+
+
+def main():
+	parser=optparse.OptionParser("Usage checkport -H <host address> -p <port>\nOR checkport -H <host address> -p <start port>:<end port>")
+	parser.add_option("-H",dest="host",type="string",help="Please enter a host address")
+	parser.add_option("-p",dest="port",type="string",help="Please enter a port to check")
+	(options,args)=parser.parse_args()
+
+	port=options.port
+	host=options.host
+	if port==None or host==None:
+		print parser.usage
+		exit(0)
+
+	elif ":" in port:
+		start=int(port.split(":")[0].replace(" ",""))
+		end=int(port.split(":")[1].replace(" ",""))
+
+		for i in range (start,end+1):
+			portScan(host,str(i)) #have to covert to string for nmap.py, doesnt like ints for ports
+
+	else:
+		portScan(host,port)
+
+
+if __name__=="__main__":
+	main()
