@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+
+'''
+Quinn Perfetto 2014
+
+
+Zip file password brute force using the zipfile module
+
+***FOR DATA RECOVERY USE ONLY, NOT FOR MALICIOUS INTENT***
+
+Usage:
+
+zipcrack -f <zip file to crack>
+
+optional paramter --pf <password file> if you want to use your own password file.
+
+The password file used for this program was provided by https://xato.net/passwords/more-top-worst-passwords/#.VAomI2RdVyF
+
+'''
+
+
+
+import zipfile
+import sys
+import os
+from threading import Thread
+import optparse
+
+found=False #To indicate a found password so that the program will exit
+			#Since I am using threads, exit(0) inside of a thread only exists the thread, not the actual program
+
+def tryPassword(zfile,password):
+	global found #global found variable to exit program
+	try:
+		zfile.extractall(pwd=password) #attempt the password
+		print "[+] Found password: "+password
+		found=True
+		exit(0)
+	except:
+		pass
+
+
+
+def main():
+
+
+	path=os.path.dirname(os.path.realpath(__file__))+"/"
+
+
+	parser=optparse.OptionParser("Usage zipcrack -f <zip filename>\nOptional: --pf <passwordfile>.txt (Specify your own password file)")
+	parser.add_option("-f",dest="filename",type="string",help="Specify a zip file")
+	parser.add_option("--pf",dest="passwordFile",type="string",help="Invalid password file")
+	(options,args)=parser.parse_args()
+
+	filename=options.filename
+	passwordFile=options.passwordFile
+
+	if filename==None:
+		print parser.usage
+		exit(0)
+	if passwordFile==None:
+		passwordFile=path+"resources/passwords.txt"
+	elif not os.path.exists(passwordFile):
+		print "Invalid password file"
+		exit(0)
+
+
+	passwords=open(passwordFile,"r").readlines()
+	zfile=zipfile.ZipFile(filename)
+
+	print "[*] Attempting to open file..."
+
+	for password in passwords:
+		password=password.strip()
+		t=Thread(target=tryPassword,args=(zfile,password))
+		t.start()
+		if found:
+			exit(0)
+
+	print "[-] No password could be found"
+
+
+if __name__=="__main__":
+	main()
+
+

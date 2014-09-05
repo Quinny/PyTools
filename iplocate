@@ -1,10 +1,32 @@
 #!/usr/bin/env python
 
+
+'''
+Quinn Perfetto 2014
+
+
+IP Location using the pygeoip module
+
+Usage:
+
+iplocate -a <IP Address> OR iplocate -f <filename>
+
+Where <IP Address> is a valid public IP address and <filename> is a file which contains a list of valid public IP Addresses separated
+by newline characters
+
+
+'''
+
+
+
 import pygeoip #Used for handling the GeoLiteCity.dat file
 import optparse #Parsing options
 import os #checking file validity
 
-gi=pygeoip.GeoIP('resources/GeoLiteCity.dat') #The database that will be giving us the location information
+
+path=os.path.dirname(os.path.realpath(__file__))+"/"
+
+gi=pygeoip.GeoIP(path+'resources/GeoLiteCity.dat') #The database that will be giving us the location information
 
 def findLocation(target):
 	try:
