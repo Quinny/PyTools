@@ -9,6 +9,7 @@ Dependancies
 Although most of the modules used come pre-installed with python, I will still list them here
 
 * optparse
+* BeautifulSoup4
 * python-nmap
 * Image
 * pygeoip
@@ -42,6 +43,19 @@ checkport -H <host address> -p <start port>:<end port>
 ```
 
 For checking a range of ports
+
+grabimages
+-----------
+
+Downloads all images found within ```<img>``` tags on a given web page
+
+```
+grabimages -u <url>
+```
+
+The images will be downloaded into the current working directory
+
+
 
 imageanalyze
 -------------------
