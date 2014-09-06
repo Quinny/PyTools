@@ -19,7 +19,7 @@ Although most of the modules used come pre-installed with python, I will still l
 Most (if not all) of these should be available using 
 
 ```
-pip-install <module>
+easy_install <module>
 ```
 
 Usages
