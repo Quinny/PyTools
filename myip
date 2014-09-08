@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+
+'''
+Quinn Perfetto 2014
+
+
+Displays your local and public IP addresses
+
+Usage:
+
+myip
+
+
+Uses httpbin.org json API, if this ever stops it will have to be changed
+
+'''
+
+
+
+import json
+from urllib2 import urlopen
+import socket
+
+local=socket.gethostbyname(socket.gethostname())
+public=json.load(urlopen('http://httpbin.org/ip'))['origin'];
+
+print "[+] Local IP : "+local
+print "[+] Public IP: "+public

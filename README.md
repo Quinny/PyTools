@@ -89,6 +89,15 @@ iplocate -f <filename>
 
 where ```<filename>``` contains a list of IP Addresses separated by newlines
 
+myip
+-----
+
+Displays both your local and public IP address
+
+```
+myip
+```
+
 pdfanalyze
 --------------
 Reads the meta data from the given PDF file
