@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+
+'''
+Quinn Perfetto 2014
+
+
+Setting up standard latex template with a single command
+
+Usage:
+
+textemp -o <name of tex file>
+
+optional paramter -e <editor command> the file will be opened with editor automatically after creation
+
+The contents of resources/textemplate.tex will be used for the template
+'''
+
+
+import optparse
+import os
+
+def main():
+	parser=optparse.OptionParser("Usage textemp -o <output file>\nOptional -e <editor> automatically opens file with editor")
+	parser.add_option("-o",dest="outputFile",type="string",help="Specify an ouput file")
+	parser.add_option("-e",dest="editor",type="string",help="automatically open in editor")
+	(options,args)=parser.parse_args()
+
+	output=options.outputFile
+	editor=options.editor
+
+	if output==None:
+		print parser.usage
+		exit(0)
+
+	if not output.endswith(".tex"):
+		output+=".tex"
+
+	editorSet=False
+	if editor!=None:
+		editorSet=True
+
+	path=os.path.dirname(os.path.realpath(__file__))+"/"
+	templateFile=path+"resources/textemplate.tex"
+
+	with open(templateFile) as f:
+		with open(output,"w") as w:
+			for line in f:
+				w.write(line)
+
+	f.close()
+	w.close()
+
+	if editorSet:
+		os.system(editor+" "+output)
+
+
+
+if __name__=="__main__":
+	main();

@@ -106,6 +106,28 @@ Reads the meta data from the given PDF file
 pdfanalyze -f <filename>
 ```
 
+textemp
+---------------
+Creates a latex template file based on the contents of resources/textemplate.tex.  The contents will be copied into the specified file.
+
+```
+textemp -o <output file>
+```
+
+OR with an option for an editor command to be run immediately after the template is generated
+
+```
+textemp -o <output file> -e <editor command>
+```
+
+For example:
+
+```
+textemp -o thesis -e vi
+```
+
+Will create thesis.tex in the current working directory and then open that file with vi
+
 zipcrack
 -----------
 Attempts to open a password protected zip file using the top 10,000 most commonly used passwords found at [xato.net](https://xato.net/passwords/more-top-worst-passwords/#.VAomI2RdVyF)
