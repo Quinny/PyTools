@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+'''
+Quinn Perfetto 2014
+
+
+Generating jekyll post files with a few keystrokes
+
+Usage:
+
+jpost <post title>
+
+A file will be created in the current working directory with the properly formatted <date> - <post title>.md name, and it will
+be automatically populated with the boilerplate information
+
+'''
+
+import datetime
+import sys
+import os
+
+def getAuthor():
+	path = os.path.dirname(os.path.realpath(__file__))+"/"
+	config = "resources/.jpost"
+	if os.path.isfile(path + config):
+		name = open(path + config).read()
+	else:
+		print "What name will you be posting under?"
+		name = raw_input()
+		f = open(path + config, "w")
+		f.write(name)
+		f.close()
+	return name
+
+def main():
+	if len(sys.argv) == 1:
+		print "Usage: jpost <post title>"
+		exit(0)
+
+	name = getAuthor()
+	filename = str(datetime.date.today()) + "-" + sys.argv[1].replace(" ","-").lower() + ".md"
+	f = open(filename, "w")
+	f.write("---\ntitle: " + sys.argv[1] + "\nauthor: " + name + "\nlayout: post\npermalink: /" + sys.argv[1].replace(" ","-").lower() + "/\n---\n");
+	f.close();
+
+if __name__ == "__main__":
+	main()

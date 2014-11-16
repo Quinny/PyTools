@@ -15,6 +15,7 @@ Although most of the modules used come pre-installed with python, I will still l
 * pygeoip
 * pyPdf
 * zipfile
+* datetime
 
 Most (if not all) of these should be available using 
 
@@ -88,6 +89,15 @@ iplocate -f <filename>
 ```
 
 where ```<filename>``` contains a list of IP Addresses separated by newlines
+
+jpost
+--------
+
+Automatically creates properly formated jekyll post markdown files in the current working directory
+
+```
+jpost "Hello World"
+```
 
 myip
 -----
