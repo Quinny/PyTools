@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+import urllib2, sys, os
+
+'''
+Quinn Perfetto 2014
+
+Given a problem number, this program will make the file for me formatted with the name for a project euler question.
+
+I got tired of constantly copying and pasting the names and what not, so this is super useful
+
+Usage:
+	eulerq <problem number> [extension]
+the extension will default to .cpp, which i commonly use
+
+I also made it so that if i already did the problem it will not overwrite my existing work
+
+'''
+
+def done_problem(problem_no):
+	done = os.listdir(".")
+	done = filter(lambda x : len(x.split(" ")) > 0, done)
+	done = map(lambda x : x.split(" ")[0], done)
+	return pad_no(problem_no) in done
+
+def problem_name(problem_no):
+	page = urllib2.urlopen("https://projecteuler.net/problem=" + problem_no)
+	source = page.read()
+	return source.split("<h2>")[1].split("</h2>")[0]
+
+def pad_no(problem_no):
+	return "0" * (3 - len(problem_no)) + problem_no
+
+def main():
+	usage = "Usage: eulerq <problem number> [extension] \n" \
+			"\t[extension] defaults to .cpp"
+	if len(sys.argv) == 1:
+		print usage
+		exit(0)
+	problem_no = sys.argv[1]
+	if done_problem(problem_no):
+		print "You already did problem " + problem_no
+		exit(0)
+	name = problem_name(problem_no)
+	extension = ".cpp"
+	if len(sys.argv) == 3:
+		extension = "." + sys.argv[2]
+	os.system("touch \"" + pad_no(problem_no) + " " + name + extension + "\"")
+
+
+if __name__ == "__main__":
+	main()

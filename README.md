@@ -45,6 +45,16 @@ checkport -H <host address> -p <start port>:<end port>
 
 For checking a range of ports
 
+eulerq
+---------
+
+Grabs the name and a creates a file for a given project euler problem number
+
+```
+eulerq <problem numeber> [extension]
+```
+
+
 grabimages
 -----------
 
