@@ -51,9 +51,17 @@ eulerq
 Grabs the name and a creates a file for a given project euler problem number
 
 ```
-eulerq <problem numeber> [extension]
+eulerq <problem number> [extension]
 ```
 
+fitsin
+----------
+
+Checks if a given number (or python friendly expression) will fit in the builtin integral types (int or long).
+
+```
+fitsin <number | expression>
+```
 
 grabimages
 -----------

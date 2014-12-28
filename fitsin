@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+'''
+Quinn Perfetto 2014
+
+a VERY simple tool to check if certain numbers will overflow ints or longs
+
+Its hard to tell sometimes just by looking at a number whether you will need an int or long, or even a BigInteger.
+So I just made this simple tool to help me out
+
+Usage:
+	fitsin <number | expression>
+
+***NOTE:
+	The argument is read using eval(), this allows for arithmetic expressions such as 403 + 8, 400**9, etc.
+'''
+
+import sys
+
+if len(sys.argv) == 1:
+	print "Usage: fitsin <number>"
+	exit(0)
+
+n = eval(sys.argv[1])
+if n < (2 ** 31) - 1:
+	print str(n) + " will fit in a 32 bit integer (int)."
+elif n < (2 ** 63) - 1:
+	print str(n) + " will fit in a 64 bit integer (long)."
+else:
+	print str(n) + " will not fit in a builtin integral type."
