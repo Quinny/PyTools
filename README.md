@@ -28,6 +28,15 @@ Usages
 
 First of all, clone the repo and add it to your PATH variable
 
+cb
+------------
+
+Copies entire files to the clipboard
+
+```
+cb <filename>
+```
+
 checkport
 -------------
 

@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+"""
+Quinn Perfetto 2014
+
+Quick copying of files to the clipboard
+
+If you have ever used vim or any other command line text editor, you know how hard
+it is to copy an entire file to the clipboard
+
+Usage:
+
+cb <filename>
+
+"""
+
+
+import sys, os
+
+if len(sys.argv) != 2:
+    print "Usage: cb <filename>"
+    exit(0)
+
+if not os.path.exists(sys.argv[1]):
+    print "Invalid file"
+    exit(0)
+
+os.system("cat " + sys.argv[1] + " | pbcopy")
