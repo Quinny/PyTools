@@ -126,6 +126,15 @@ Automatically creates properly formated jekyll post markdown files in the curren
 jpost "Hello World"
 ```
 
+lines
+-------
+
+Counts the number of lines of code of given extensions
+
+```
+lines extension[ extension]*
+```
+
 myip
 -----
 
