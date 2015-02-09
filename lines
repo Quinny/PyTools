@@ -25,9 +25,10 @@ exts = sys.argv[1:]
 total = 0
 for exten in exts:
     msg = os.popen('find . "(" -name "*.' + exten + '" ")" -print0 | xargs -0 wc -l | grep total').read()
-    n_lines = int(msg.split()[0])
-    print "{0:10s} : {1:10d} lines".format(exten, n_lines).ljust(20)
-    total += n_lines
+    if len(msg.split()) > 0:
+        n_lines = int(msg.split()[0])
+        print "{0:10s} : {1:10d} lines".format(exten, n_lines).ljust(20)
+        total += n_lines
 print "-" * 30
 print "{0:10s} : {1:10d} lines".format("Total", total)
 
