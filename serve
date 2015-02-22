@@ -1,0 +1,15 @@
+: '
+
+Quinn Perfetto 2014
+
+Although this really isn't written in python, it uses python.
+
+This will start a very simple web server in your current working directory
+on port 8000
+
+
+Usage:
+    serve
+'
+
+python -m SimpleHTTPServer

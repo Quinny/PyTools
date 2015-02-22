@@ -161,6 +161,15 @@ Checks the primality of a given number
 prime <number>
 ```
 
+serve
+------------------
+
+Creates a local, light weight web server that serves out of your current working directory on port 8000.
+
+```
+serve
+```
+
 textemp
 ---------------
 Creates a latex template file based on the contents of resources/textemplate.tex.  The contents will be copied into the specified file.
