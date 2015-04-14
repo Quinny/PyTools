@@ -192,6 +192,19 @@ textemp -o thesis -e vi
 
 Will create thesis.tex in the current working directory and then open that file with vi
 
+timer
+-------------------------------
+
+Puts a time limit on process execution
+
+```
+timer real_time arg[ args]*
+```
+
+real_time is a time in seconds represented by a real number (can be fractional)
+
+arg[ args]* is the command which spawns the process to be timed
+
 zipcrack
 -----------
 Attempts to open a password protected zip file using the top 10,000 most commonly used passwords found at [xato.net](https://xato.net/passwords/more-top-worst-passwords/#.VAomI2RdVyF)

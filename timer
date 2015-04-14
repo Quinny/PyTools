@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+
+'''
+Quinn Perfetto 2015
+
+Limit the execution time of a process and kill it after the this time is exceeded.
+
+One side effect of this program is that it does NOT poll the processes regularly
+throughout its execution.  This means that it will block for the full wait time
+even if the processes dies immediately (just so you know).  So try and get
+a tight upperbound or else you will be waiting around forever.
+
+Usage:
+
+    timer wait_time arg[ arg]*
+
+Where:
+    wait_time is the time in seconds which you wish to wait before killing
+    the processes
+
+    arg[ arg]* is the command which spawns the process
+
+ex. timer 5 python runme.py
+
+    puts a timer of 5 seconds on the execution of "python runme.py"
+
+Note: Time can be specified as decimal i.e.
+
+timer 0.5 myip
+'''
+import subprocess, time, sys
+
+usage = "Usage: timer time arg[ arg]*\n"+\
+        "\t time is a real number\n"+\
+        "\t arg[ arg]* is a valid command"
+
+try:
+    n = float(sys.argv[1])
+except:
+    print "Invalid time : " + sys.argv[1] + "\n"
+    print usage
+    exit(0)
+
+try:
+    x = subprocess.Popen(sys.argv[2:])
+except:
+    print "Invalid command: " + " ".join(sys.argv[2:])
+    print usage
+    exit(0)
+
+time.sleep(n)
+
+t = x.poll()
+if t is not None:
+    print "Process completed within " + str(n) + " seconds"
+else:
+    print "Time limit of " + str(n) + " seconds exceeded, process killed"
+    x.kill()
