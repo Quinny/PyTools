@@ -13,7 +13,6 @@ cb <filename>
 
 """
 
-
 import sys, os
 
 if len(sys.argv) != 2:
