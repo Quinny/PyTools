@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Quinn Perfetto 2014
+Quinn Perfetto 2015
 
 Quick copying of files to the clipboard
 
@@ -13,11 +13,9 @@ cb <filename>
 
 """
 
-import sys, os
+import sys, os, pytools
 
-if len(sys.argv) != 2:
-    print "Usage: cb <filename>"
-    exit(0)
+pytools.assert_n_args(1, "Usage: cb <filename>")
 
 if not os.path.exists(sys.argv[1]):
     print "Invalid file"

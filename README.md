@@ -43,16 +43,8 @@ checkport
 Checks the status of the given port(s) on the host machine.
 
 ```
-checkport -H <host address> -p <port>
+checkport <host address>:<port>[-<endport>]
 ```
-
-OR
-
-```
-checkport -H <host address> -p <start port>:<end port>
-```
-
-For checking a range of ports
 
 eulerq
 ---------
