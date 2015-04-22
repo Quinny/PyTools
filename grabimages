@@ -49,39 +49,24 @@ def downloadImage(url,imgTag):
 		imgFile.close()
 		return imgFileName
 	except Exception as e:
-		
 		print "[-] Download failed"
 		print "[-] "+str(e)
-
 
 def main():
 	parser=optparse.OptionParser("Usage grabimages -u <url>")
 	parser.add_option("-u",dest="url",type="string",help="Enter a URL")
 	(options,args)=parser.parse_args()
-
 	url=options.url
-
 	if url==None:
 		print parser.usage
 		exit(0)
-
-
 	if not hasProtocol(url):
 		url="http://"+url
-
 	images=findImages(url)
-
-
-
-
 	if len(images)>0:
 		for image in images:
 			downloadImage(url,image)
 	else:
 		print "[-] No images found"
-
-
 if __name__=="__main__":
 	main()
-
-

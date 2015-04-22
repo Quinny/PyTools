@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import urllib2, sys, os
+import urllib2, sys, os, pytools
 
 '''
 Quinn Perfetto 2014
@@ -33,13 +33,12 @@ def pad_no(problem_no):
 def main():
 	usage = "Usage: eulerq <problem number> [extension] \n" \
 			"\t[extension] defaults to .cpp"
-	if len(sys.argv) == 1:
-		print usage
-		exit(0)
-	problem_no = sys.argv[1]
-	if done_problem(problem_no):
-		print "You already did problem " + problem_no
-		exit(0)
+
+        pytools.assert_n_args(1, usage)
+
+        problem_no = sys.argv[1]
+	pytools.error_if(done_problem(problem_no),
+                "You already did problem " + problem_no)
 	name = problem_name(problem_no)
 	extension = ".cpp"
 	if len(sys.argv) == 3:

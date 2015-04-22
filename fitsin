@@ -15,12 +15,8 @@ Usage:
 	The argument is read using eval(), this allows for arithmetic expressions such as 403 + 8, 400**9, etc.
 '''
 
-import sys
-
-if len(sys.argv) == 1:
-	print "Usage: fitsin <number>"
-	exit(0)
-
+import sys, pytools
+pytools.assert_n_args(1, "Usage: fitsin <number>")
 n = eval(sys.argv[1])
 if n < (2 ** 31) - 1:
 	print str(n) + " will fit in a 32 bit integer (int)."

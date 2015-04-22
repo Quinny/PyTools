@@ -28,6 +28,8 @@ def port_scan(host,port): #checks the state of a given port on the host computer
 def main():
         usage = "Usage: checkport <address>:<port>[-<endport>]"
         pytools.assert_n_args(1, usage)
+        pytools.error_if(len(sys.argv[1].split(":")) != 2,
+            "Specify a port or range of ports")
         (host, port) = tuple(sys.argv[1].split(":"))
 
         if "-" in port:

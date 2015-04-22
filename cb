@@ -16,9 +16,6 @@ cb <filename>
 import sys, os, pytools
 
 pytools.assert_n_args(1, "Usage: cb <filename>")
-
-if not os.path.exists(sys.argv[1]):
-    print "Invalid file"
-    exit(0)
-
+pytools.error_if(not os.path.exists(sys.argv[1]),
+        "Invalid file")
 os.system("cat " + sys.argv[1] + " | pbcopy")
