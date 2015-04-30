@@ -14,9 +14,6 @@ myip
 Uses httpbin.org json API, if this ever stops it will have to be changed
 
 '''
-
-
-
 import json
 from urllib2 import urlopen
 import socket

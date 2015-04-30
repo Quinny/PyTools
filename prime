@@ -11,25 +11,24 @@ This may be adapted in the future to analyze the number further
 
 import sys
 import math
+import pytools
 
 def factors(n):
-	f = []
-	for i in xrange(1, int(math.sqrt(n)) + 1):
-		if n % i == 0:
-			f.append((i, n/i))
-	return f
+    f = []
+    for i in xrange(1, int(math.sqrt(n)) + 1):
+            if n % i == 0:
+                    f.append((i, n/i))
+    return f
 
 def main():
-	if len(sys.argv) == 1:
-		print "Usage: prime <number>"
-		exit(0)
-	n = int(sys.argv[1])
-	f = factors(n)
-	if len(f) == 1:
-		print str(n) + " is prime"
-	else:
-		print "the factors of " + str(n) + " are:"
-		print f
+    pytools.assert_n_args(1, "prime <number|expression>")
+    n = int(eval(sys.argv[1]))
+    f = factors(n)
+    if len(f) == 1:
+        print str(n) + " is prime"
+    else:
+        print "the factors of " + str(n) + " are:"
+        print f
 
 if __name__ == "__main__":
 	main()

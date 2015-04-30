@@ -1,5 +1,8 @@
 import sys
 
+# Helper functions for the helper functions
+# meta baby
+
 def assert_n_args(n, usage = None):
     if len(sys.argv) != n + 1:
         if usage is not None:

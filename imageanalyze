@@ -1,60 +1,48 @@
 #!/usr/bin/env python
 
 '''
-Quinn Perfetto 2014
-
+Quinn Perfetto 2015
 
 Image file exif data analyzer
 
-
 Usage:
 
-imageanalyze -f <image file>
+imageanalyze <image file>
 
 The output on this one can get long and wonky so I would reccomend redirecting it to a text file
 
-e.x. imageanalyze -f <image file> > exif.txt
+e.x. imageanalyze <image file> > exif.txt
 
 '''
-
-
 from ExifTags import TAGS
 import optparse
 import Image
+import pytools
+import os
+import sys
 
+def check_exif(img_file_name):
+    try:
+        img_file = Image.open(img_file_name)
+        info = img_file._getexif()
+        if len(info) > 0:
+                print "[*] Exif data for " + img_file_name
+                for (tag, value) in info.items():
+                        decoded = TAGS.get(tag, tag)
+                        print str(decoded) + ":\t" + str(value) + "\n"
 
-def testForExif(imgFileName):
-	try:
-		imgFile=Image.open(imgFileName)
-		info=imgFile._getexif()
-		if len(info)>0:
-			print "[*] Exif data for "+imgFileName
-			for (tag, value) in info.items(): 
-				decoded = TAGS.get(tag, tag) 
-				print str(decoded)+":\t"+str(value)+"\n"
+        else:
+                print "[-] No metadata found for " + img_file_name
 
-		else:
-			print "[-] No metadata found for "+imgFileName
-
-	except:
-		pass
+    except:
+            pass
 
 
 
 def main():
-	parser=optparse.OptionParser("Usage imageanalyze -f <image file>")
-	parser.add_option("-f",dest="filename",type="string",help="Specify an image file")
-	(options,args)=parser.parse_args()
-	filename=options.filename
-
-	if filename==None:
-		print parser.usage
-		exit(0)
-
-	testForExif(filename)
-
-
+    pytools.assert_n_args(1, "Usage: imageanalyze <filename>")
+    pytools.error_if(not os.path.exists(sys.argv[1]), "Invalid file")
+    check_exif(sys.argv[1])
 
 if __name__=="__main__":
-	main()
-
+    main()

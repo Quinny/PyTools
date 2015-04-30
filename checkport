@@ -32,13 +32,18 @@ def main():
             "Specify a port or range of ports")
         (host, port) = tuple(sys.argv[1].split(":"))
 
-        if "-" in port:
-            (start, end) = tuple(port.split("-"))
-            for i in range(int(start), int(end) + 1):
-                # nmap likes the ports as strings
-                port_scan(host, str(i))
-        else:
-            port_scan(host, port)
+        try:
+            if "-" in port:
+                (start, end) = tuple(port.split("-"))
+                for i in range(int(start), int(end) + 1):
+                    # nmap likes the ports as strings
+                    port_scan(host, str(i))
+            else:
+                port_scan(host, port)
+        except Exception as e:
+            print "Invalid hostname"
+            exit(0)
+
 
 if __name__=="__main__":
 	main()

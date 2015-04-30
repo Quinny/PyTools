@@ -70,7 +70,7 @@ grabimages
 Downloads all images found within ```<img>``` tags on a given web page
 
 ```
-grabimages -u <url>
+grabimages <url>
 ```
 
 The images will be downloaded into the current working directory
@@ -83,13 +83,13 @@ imageanalyze
 Reads the exif data from the given image file
 
 ```
-imageanalyze -f <image file>
+imageanalyze <image file>
 ```
 
 I woud suggest redirecting the ouput of this one to a text file as the output can get long/wonky depending on the file
 
 ```
-imageanalyze -f <image file> > output.txt
+imageanalyze <image file> > output.txt
 ```
 
 iplocate
@@ -141,7 +141,7 @@ pdfanalyze
 Reads the meta data from the given PDF file
 
 ```
-pdfanalyze -f <filename>
+pdfanalyze <filename>
 ```
 
 prime

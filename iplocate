@@ -2,70 +2,48 @@
 
 
 '''
-Quinn Perfetto 2014
-
+Quinn Perfetto 2015
 
 IP Location using the pygeoip module
 
 Usage:
 
-iplocate -a <IP Address> OR iplocate -f <filename>
+iplocate <IP Address>
 
 Where <IP Address> is a valid public IP address and <filename> is a file which contains a list of valid public IP Addresses separated
 by newline characters
 
-
 '''
 
+import pygeoip
+import optparse
+import os
+import sys
+import pytools
 
+path = os.path.dirname(os.path.realpath(__file__))+"/"
+# The database that will be giving us the location information
+gi = pygeoip.GeoIP(path+'resources/GeoLiteCity.dat')
 
-import pygeoip #Used for handling the GeoLiteCity.dat file
-import optparse #Parsing options
-import os #checking file validity
-
-
-path=os.path.dirname(os.path.realpath(__file__))+"/"
-
-gi=pygeoip.GeoIP(path+'resources/GeoLiteCity.dat') #The database that will be giving us the location information
-
-def findLocation(target):
-	try:
-		record=gi.record_by_name(target) #Get the record from the geoip database
-		city=record['city'] #Grab the information
-		region=record['region_code']
-		country=record['country_name']
-		long=record['longitude']
-		lat=record['latitude']
-		print "[*] "+target+" Located" #display the information
-		print "[+] "+str(city)+" "+str(region)+" "+str(country)
-		print "[+] Latitude: "+str(lat)+" Longitude: "+str(long)
-	except:
-		print "Invalid IP Address"
+def find_location(target):
+    try:
+        # Get the record from the geoip database
+        record = gi.record_by_name(target)
+        city = record['city'] # Grab the information
+        region = record['region_code']
+        country = record['country_name']
+        long = record['longitude']
+        lat = record['latitude']
+        print "[*] " + target + " Located"
+        print "[+] " + str(city) + " " + str(region) + " " + str(country)
+        print "[+] Latitude: " + str(lat) + " Longitude: " + str(long)
+    except:
+        print "Invalid IP Address"
 
 
 def main():
-	parser=optparse.OptionParser("Usage iplocate -a <IP Address> OR iplocate -f <filename>")
-	parser.add_option("-a",dest="target",type="string",help="Specify an IP Address")
-	parser.add_option("-f",dest="filename",type="string",help="Specify a filename")
-	(options,args)=parser.parse_args()
-
-	target=options.target
-	filename=options.filename
-
-	if(target==None and filename==None):
-		print parser.usage
-		exit(0)
-	else:
-
-		if target!=None:
-			findLocation(target)
-
-		elif filename!=None and os.path.exists(filename):
-			f=open(filename,"r").readlines()
-			for line in f:
-				findLocation(line.strip())
-		else:
-			print "Invalid input file"
+    pytools.assert_n_args(1, "Usage: iplocate <IP Address>")
+    find_location(sys.argv[1])
 
 if __name__=="__main__":
 	main()

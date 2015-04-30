@@ -1,72 +1,68 @@
 #!/usr/bin/env python
 
 '''
-Quinn Perfetto 2014
-
+Quinn Perfetto 2015
 
 Grabs all images found within image tags on a given web page
 
-
 Usage:
 
-grabimages -u <page url>
+grabimages <page url>
 
 
 It will download all images found into your current working directory
 
 '''
 
-
 import urllib2
 from urlparse import urlsplit
 from os.path import basename
 from bs4 import BeautifulSoup
 import optparse
+import sys
+import pytools
 
-def findImages(url): #use beautiful soup to find all of the image tags
-	print "[*] Finding images on "+url
-	urlContent=urllib2.urlopen(url).read()
-	soup=BeautifulSoup(urlContent)
-	imgTags=soup.findAll('img')
-	return imgTags
+def find_images(url): #use beautiful soup to find all of the image tags
+	print "[*] Finding images on " + url
+	url_content = urllib2.urlopen(url).read()
+	soup = BeautifulSoup(url_content)
+	img_tags = soup.findAll('img')
+	return img_tags
 
 
-def hasProtocol(fileName):
-	return fileName.startswith("http://") or fileName.startswith("https://") #checking if the image is referenced locally
+def has_protocol(file_name):
+    #checking if the image is referenced locally
+    return file_name.startswith("http://") or file_name.startswith("https://")
 
-def downloadImage(url,imgTag):
+def download_image(url,img_tag):
 	try:
 		print "[+] Downloading image..."
-		imgSrc=imgTag['src']
-		if not hasProtocol(imgSrc): #if the image is referenced locally we need to fix that so we can download it
-			imgSrc=url+"/"+imgSrc
-
-		print imgSrc
-		imgContent = urllib2.urlopen(imgSrc).read()
-		imgFileName = basename(urlsplit(imgSrc)[2])
-		imgFile = open(imgFileName, 'wb')
-		imgFile.write(imgContent)
-		imgFile.close()
-		return imgFileName
+		img_src = img_tag['src']
+		#if the image is referenced locally we need to fix that so
+                #we can download it
+                if not has_protocol(img_src):
+                    imgSrc = url + "/" + img_src
+		print img_src
+		img_content = urllib2.urlopen(img_src).read()
+		img_file_name = basename(urlsplit(img_src)[2])
+		img_file = open(img_file_name, 'wb')
+		img_file.write(img_content)
+		img_file.close()
+		return img_file_name
 	except Exception as e:
 		print "[-] Download failed"
-		print "[-] "+str(e)
+		print "[-] " + str(e)
 
 def main():
-	parser=optparse.OptionParser("Usage grabimages -u <url>")
-	parser.add_option("-u",dest="url",type="string",help="Enter a URL")
-	(options,args)=parser.parse_args()
-	url=options.url
-	if url==None:
-		print parser.usage
-		exit(0)
-	if not hasProtocol(url):
-		url="http://"+url
-	images=findImages(url)
-	if len(images)>0:
-		for image in images:
-			downloadImage(url,image)
-	else:
-		print "[-] No images found"
+        usage = "Usage: grabimages <url>"
+        pytools.assert_n_args(1, usage)
+        url = sys.argv[1]
+        if not has_protocol(url):
+            url = "http://" + url
+        images = find_images(url)
+        pytools.error_if(len(images) == 0, "[-] No Images found")
+        for image in images:
+            download_image(url, image)
+
 if __name__=="__main__":
 	main()

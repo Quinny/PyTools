@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 '''
-Quinn Perfetto 2014
-
+Quinn Perfetto 2015
 
 Generating jekyll post files with a few keystrokes
 
@@ -14,33 +13,35 @@ A file will be created in the current working directory with the properly format
 be automatically populated with the boilerplate information
 
 '''
-
 import datetime
 import sys
 import os
+import pytools
 
-def getAuthor():
-	path = os.path.dirname(os.path.realpath(__file__))+"/"
-	config = "resources/.jpost"
-	if os.path.isfile(path + config):
-		name = open(path + config).read()
-	else:
-		print "What name will you be posting under?"
-		name = raw_input()
-		f = open(path + config, "w")
-		f.write(name)
-		f.close()
-	return name
+def get_author():
+    path = os.path.dirname(os.path.realpath(__file__))+"/"
+    config = "resources/.jpost"
+    if os.path.isfile(path + config):
+            name = open(path + config).read()
+    else:
+            print "What name will you be posting under?"
+            name = raw_input()
+            f = open(path + config, "w")
+            f.write(name)
+            f.close()
+    return name
+
+def slug(s, divider = "_"):
+    return s.replace(" ", divider).lower()
 
 def main():
-	if len(sys.argv) == 1:
-		print "Usage: jpost <post title>"
-		exit(0)
-
-	name = getAuthor()
-	filename = str(datetime.date.today()) + "-" + sys.argv[1].replace(" ","-").lower() + ".md"
+        pytools.assert_n_args(1, "Usage: jpost <post title>")
+	name = get_author()
+	filename = str(datetime.date.today()) + "-" + slug(sys.argv[1]) + ".md"
 	f = open(filename, "w")
-	f.write("---\ntitle: " + sys.argv[1] + "\nauthor: " + name + "\nlayout: post\npermalink: /" + sys.argv[1].replace(" ","-").lower() + "/\n---\n");
+	f.write("---\ntitle: " + sys.argv[1] + "\nauthor: " +\
+                name + "\nlayout: post\npermalink: /" +\
+                slug(sys.argv[1], "-") + "/\n---\n");
 	f.close();
 
 if __name__ == "__main__":
