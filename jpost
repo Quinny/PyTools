@@ -31,18 +31,27 @@ def get_author():
             f.close()
     return name
 
-def slug(s, divider = "_"):
+def slug(s, divider = "-"):
     return s.replace(" ", divider).lower()
+
+def open_last():
+    os.system(
+            "vim " +
+            os.listdir(".")[::-1][0]
+        );
 
 def main():
         pytools.assert_n_args(1, "Usage: jpost <post title>")
-	name = get_author()
+        if sys.argv[1] == "last":
+            open_last()
+            return
+        name = get_author()
 	filename = str(datetime.date.today()) + "-" + slug(sys.argv[1]) + ".md"
 	f = open(filename, "w")
 	f.write("---\ntitle: " + sys.argv[1] + "\nauthor: " +\
                 name + "\nlayout: post\npermalink: /" +\
                 slug(sys.argv[1], "-") + "/\n---\n");
 	f.close();
-
+        os.system("vim " + filename)
 if __name__ == "__main__":
 	main()

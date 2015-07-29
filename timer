@@ -28,11 +28,13 @@ Note: Time can be specified as decimal i.e.
 
 timer 0.5 myip
 '''
-import subprocess, time, sys
+import subprocess, time, sys, pytools
 
 usage = "Usage: timer time arg[ arg]*\n"+\
         "\t time is a real number\n"+\
         "\t arg[ arg]* is a valid command"
+
+pytools.assert_n_args(2, usage)
 
 try:
     n = float(sys.argv[1])

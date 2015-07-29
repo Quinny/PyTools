@@ -34,8 +34,6 @@ def main():
 	usage = "Usage: eulerq <problem number> [extension] \n" \
 			"\t[extension] defaults to .cpp"
 
-        pytools.assert_n_args(1, usage)
-
         problem_no = sys.argv[1]
 	pytools.error_if(done_problem(problem_no),
                 "You already did problem " + problem_no)
