@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+import pytools
+import sys
+import random
+
+def main():
+    pytools.assert_n_args(1, "shuffle <filename>")
+    lines = open(sys.argv[1]).readlines()
+    random.shuffle(lines)
+    print "\n".join(lines)
+
+main()
